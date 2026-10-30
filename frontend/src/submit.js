@@ -1,5 +1,5 @@
 // submit.js
-// VectorShift Analyze Pipeline Action & Minimal Enterprise Result Dialog
+// VectorShift Backend Integration & Pipeline Analysis Alert
 
 import React, { useState } from 'react';
 import { useStore } from './store';
@@ -10,80 +10,87 @@ const selector = (state) => ({
   edges: state.edges,
 });
 
-// Check if graph is a Directed Acyclic Graph (DAG) using Kahn's algorithm
-const checkIsDAG = (nodes, edges) => {
-  if (!nodes || nodes.length === 0) return true;
-  const adj = {};
-  const inDegree = {};
-
-  nodes.forEach((node) => {
-    adj[node.id] = [];
-    inDegree[node.id] = 0;
-  });
-
-  edges.forEach((edge) => {
-    if (adj[edge.source] && inDegree[edge.target] !== undefined) {
-      adj[edge.source].push(edge.target);
-      inDegree[edge.target] = (inDegree[edge.target] || 0) + 1;
-    }
-  });
-
-  const queue = [];
-  nodes.forEach((node) => {
-    if (inDegree[node.id] === 0) {
-      queue.push(node.id);
-    }
-  });
-
-  let visited = 0;
-  while (queue.length > 0) {
-    const curr = queue.shift();
-    visited += 1;
-    (adj[curr] || []).forEach((neighbor) => {
-      inDegree[neighbor] -= 1;
-      if (inDegree[neighbor] === 0) {
-        queue.push(neighbor);
-      }
-    });
-  }
-
-  return visited === nodes.length;
-};
-
 export const SubmitButton = () => {
   const { nodes, edges } = useStore(selector, shallow);
-  const [isOpen, setIsOpen] = useState(false);
-  const [analysis, setAnalysis] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [modalData, setModalData] = useState(null);
 
-  const handleAnalyze = () => {
-    const isDag = checkIsDAG(nodes, edges);
-    setAnalysis({
-      numNodes: nodes.length,
-      numEdges: edges.length,
-      isDag,
-    });
-    setIsOpen(true);
+  const handleSubmit = async () => {
+    setLoading(true);
+
+    try {
+      // Send nodes and edges to the FastAPI backend endpoint
+      const response = await fetch('http://127.0.0.1:8000/pipelines/parse', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ nodes, edges }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server responded with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      const { num_nodes, num_edges, is_dag } = data;
+
+      // 1. User-friendly browser alert
+      const alertMessage =
+        `📊 Pipeline Analysis Result:\n\n` +
+        `• Number of Nodes: ${num_nodes}\n` +
+        `• Number of Edges: ${num_edges}\n` +
+        `• Is a DAG: ${is_dag ? 'Yes (Valid Acyclic Graph)' : 'No (Contains Cycles)'}`;
+
+      alert(alertMessage);
+
+      // 2. Also set modal data for the minimalist enterprise result dialog
+      setModalData(data);
+    } catch (error) {
+      console.warn('Backend request failed:', error);
+
+      // Client-side fallback check if the backend server is not running yet
+      const isDagClient = checkIsDAGClient(nodes, edges);
+      const fallbackData = {
+        num_nodes: nodes.length,
+        num_edges: edges.length,
+        is_dag: isDagClient,
+      };
+
+      const alertMessage =
+        `📊 Pipeline Analysis Result (Client-side calculated):\n\n` +
+        `• Number of Nodes: ${fallbackData.num_nodes}\n` +
+        `• Number of Edges: ${fallbackData.num_edges}\n` +
+        `• Is a DAG: ${fallbackData.is_dag ? 'Yes (Valid Acyclic Graph)' : 'No (Contains Cycles)'}\n\n` +
+        `(Note: Start the FastAPI backend with 'uvicorn main:app --reload' in /backend to connect directly)`;
+
+      alert(alertMessage);
+      setModalData(fallbackData);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <>
-      {/* Floating Submit Action at bottom_center */}
+      {/* Floating Action Bar at bottom_center */}
       <div className="vs-floating-action-bar">
         <button
           type="button"
-          onClick={handleAnalyze}
+          onClick={handleSubmit}
+          disabled={loading}
           className="vs-btn-analyze"
         >
-          <span>Analyze Pipeline</span>
+          <span>{loading ? 'Analyzing...' : 'Analyze Pipeline'}</span>
           <span style={{ opacity: 0.6 }}>&rarr;</span>
         </button>
       </div>
 
       {/* Minimal Enterprise Result Modal */}
-      {isOpen && analysis && (
+      {modalData && (
         <div
           className="vs-modal-backdrop"
-          onClick={() => setIsOpen(false)}
+          onClick={() => setModalData(null)}
         >
           <div
             className="vs-modal"
@@ -94,7 +101,7 @@ export const SubmitButton = () => {
               <button
                 type="button"
                 className="vs-modal-close"
-                onClick={() => setIsOpen(false)}
+                onClick={() => setModalData(null)}
               >
                 &times;
               </button>
@@ -104,21 +111,21 @@ export const SubmitButton = () => {
             <div className="vs-metrics-grid">
               <div className="vs-metric-card">
                 <div className="vs-metric-label">Nodes</div>
-                <div className="vs-metric-value">{analysis.numNodes}</div>
+                <div className="vs-metric-value">{modalData.num_nodes}</div>
               </div>
               <div className="vs-metric-card">
                 <div className="vs-metric-label">Edges</div>
-                <div className="vs-metric-value">{analysis.numEdges}</div>
+                <div className="vs-metric-value">{modalData.num_edges}</div>
               </div>
               <div className="vs-metric-card">
                 <div className="vs-metric-label">DAG</div>
                 <div
                   className="vs-metric-value"
                   style={{
-                    color: analysis.isDag ? '#059669' : '#DC2626',
+                    color: modalData.is_dag ? '#059669' : '#DC2626',
                   }}
                 >
-                  {analysis.isDag ? 'Yes' : 'No'}
+                  {modalData.is_dag ? 'Yes' : 'No'}
                 </div>
               </div>
             </div>
@@ -126,12 +133,12 @@ export const SubmitButton = () => {
             {/* Status Message */}
             <div
               className={`vs-modal-status ${
-                analysis.isDag ? 'valid' : 'invalid'
+                modalData.is_dag ? 'valid' : 'invalid'
               }`}
             >
-              <span>{analysis.isDag ? '✓' : '⚠'}</span>
+              <span>{modalData.is_dag ? '✓' : '⚠'}</span>
               <span>
-                {analysis.isDag
+                {modalData.is_dag
                   ? 'Pipeline is a valid directed acyclic graph'
                   : 'Pipeline contains a cycle'}
               </span>
@@ -142,7 +149,7 @@ export const SubmitButton = () => {
               <button
                 type="button"
                 className="vs-modal-btn"
-                onClick={() => setIsOpen(false)}
+                onClick={() => setModalData(null)}
               >
                 Done
               </button>
@@ -153,3 +160,39 @@ export const SubmitButton = () => {
     </>
   );
 };
+
+// Client-side helper for fallback
+function checkIsDAGClient(nodes, edges) {
+  if (!nodes || nodes.length === 0) return true;
+  const adj = {};
+  const inDegree = {};
+
+  nodes.forEach((n) => {
+    adj[n.id] = [];
+    inDegree[n.id] = 0;
+  });
+
+  edges.forEach((e) => {
+    if (adj[e.source] && inDegree[e.target] !== undefined) {
+      adj[e.source].push(e.target);
+      inDegree[e.target] = (inDegree[e.target] || 0) + 1;
+    }
+  });
+
+  const queue = [];
+  nodes.forEach((n) => {
+    if (inDegree[n.id] === 0) queue.push(n.id);
+  });
+
+  let visited = 0;
+  while (queue.length > 0) {
+    const curr = queue.shift();
+    visited += 1;
+    (adj[curr] || []).forEach((nbr) => {
+      inDegree[nbr] -= 1;
+      if (inDegree[nbr] === 0) queue.push(nbr);
+    });
+  }
+
+  return visited === nodes.length;
+}
