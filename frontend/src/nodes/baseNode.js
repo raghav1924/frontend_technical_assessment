@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { Handle, Position } from 'reactflow';
+import { useStore } from '../store';
 import './baseNode.css';
 
 const resolveHandlePosition = (handle) => {
@@ -25,8 +26,20 @@ export const BaseNode = ({
   headerStyle = {},
   bodyStyle = {},
   headerActions,
+  onDelete,
   footer,
 }) => {
+  const deleteNode = useStore((state) => state.deleteNode);
+
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    if (onDelete) {
+      onDelete(id);
+    } else if (deleteNode) {
+      deleteNode(id);
+    }
+  };
+
   // Group handles by position to evenly distribute multiple handles vertically
   const handlesByPosition = {
     [Position.Left]: [],
@@ -96,7 +109,7 @@ export const BaseNode = ({
       ))}
 
       {/* Header (42px) */}
-      {(title || icon || accent || subtitle || headerActions) && (
+      {(title || icon || accent || subtitle || headerActions || deleteNode) && (
         <div className="base-node-header" style={headerStyle}>
           <div className="base-node-title-group">
             {accent && (
@@ -111,9 +124,18 @@ export const BaseNode = ({
               {subtitle && <div className="base-node-subtitle">{subtitle}</div>}
             </div>
           </div>
-          {headerActions && (
-            <div className="base-node-header-actions">{headerActions}</div>
-          )}
+          <div className="base-node-header-actions">
+            {headerActions}
+            <button
+              type="button"
+              className="base-node-delete-btn"
+              onClick={handleDelete}
+              title="Delete node"
+              aria-label="Delete node"
+            >
+              &times;
+            </button>
+          </div>
         </div>
       )}
 

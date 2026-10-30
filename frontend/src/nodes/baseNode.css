@@ -69,6 +69,33 @@
   gap: 6px;
 }
 
+/* Delete Node Button */
+.base-node-delete-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #85847F;
+  font-size: 16px;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.45;
+  transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+}
+
+.base-node:hover .base-node-delete-btn {
+  opacity: 0.85;
+}
+
+.base-node-delete-btn:hover {
+  opacity: 1 !important;
+  color: #DC2626 !important;
+  background-color: #FEF2F2 !important;
+}
+
 /* Node Body */
 .base-node-body {
   padding: 12px;
