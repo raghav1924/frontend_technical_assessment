@@ -89,6 +89,7 @@ export const BaseNode = ({
           type={handle.type || 'source'}
           position={handle.resolvedPosition}
           id={handle.resolvedId}
+          title={handle.title || handle.resolvedId}
           className={`base-node-handle ${handle.className || ''}`}
           style={handle.computedStyle}
         />
