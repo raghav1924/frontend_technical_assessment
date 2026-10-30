@@ -105,9 +105,9 @@ export const BaseNode = ({
               {subtitle && <div className="base-node-subtitle">{subtitle}</div>}
             </div>
           </div>
-          {headerActions && (
-            <div className="base-node-header-actions">{headerActions}</div>
-          )}
+          <div className="base-node-header-actions">
+            {headerActions || <span className="base-node-status-dot" />}
+          </div>
         </div>
       )}
 

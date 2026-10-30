@@ -14,7 +14,7 @@ export const TextNode = ({ id, data, selected }) => {
   return (
     <BaseNode
       id={id}
-      title="Text"
+      title="📝 Text"
       selected={selected}
       handles={[
         {

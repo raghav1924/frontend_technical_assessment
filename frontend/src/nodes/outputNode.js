@@ -19,7 +19,7 @@ export const OutputNode = ({ id, data, selected }) => {
   return (
     <BaseNode
       id={id}
-      title="Output"
+      title="📤 Output"
       selected={selected}
       handles={[
         {

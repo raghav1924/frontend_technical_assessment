@@ -7,7 +7,7 @@ export const LLMNode = ({ id, data, selected }) => {
   return (
     <BaseNode
       id={id}
-      title="LLM"
+      title="🤖 LLM"
       selected={selected}
       handles={[
         {
