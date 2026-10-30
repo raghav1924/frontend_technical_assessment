@@ -19,19 +19,20 @@ export const WebhookNode = ({ id, data, selected }) => {
   return (
     <BaseNode
       id={id}
-      title="⚡ Webhook Trigger"
+      title="Webhook"
+      accent="#84CC16"
       selected={selected}
       handles={[
         {
           type: 'source',
           position: Position.Right,
           id: `${id}-output`,
-          title: 'Webhook Payload',
+          title: 'Webhook Output',
         },
       ]}
     >
       <label>
-        Method:
+        HTTP Method
         <select value={method} onChange={handleMethodChange}>
           <option value="POST">POST</option>
           <option value="GET">GET</option>
@@ -39,7 +40,7 @@ export const WebhookNode = ({ id, data, selected }) => {
         </select>
       </label>
       <label>
-        Path:
+        Path
         <input
           type="text"
           placeholder="/webhook/path"
@@ -47,10 +48,6 @@ export const WebhookNode = ({ id, data, selected }) => {
           onChange={handlePathChange}
         />
       </label>
-      <div style={{ fontSize: '10px', color: '#64748b' }}>
-        Triggers workflow when received.
-      </div>
     </BaseNode>
   );
 };
-

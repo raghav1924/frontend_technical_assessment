@@ -19,33 +19,32 @@ export const IFConditionNode = ({ id, data, selected }) => {
   return (
     <BaseNode
       id={id}
-      title="🔀 IF / Condition"
+      title="Condition"
+      accent="#F59E0B"
       selected={selected}
       handles={[
         {
           type: 'target',
           position: Position.Left,
           id: `${id}-input`,
-          title: 'Input Value',
+          title: 'Input',
         },
         {
           type: 'source',
           position: Position.Right,
           id: `${id}-true`,
-          style: { top: '35%' },
-          title: 'True Output',
+          title: 'True',
         },
         {
           type: 'source',
           position: Position.Right,
           id: `${id}-false`,
-          style: { top: '70%' },
-          title: 'False Output',
+          title: 'False',
         },
       ]}
     >
       <label>
-        Condition:
+        Condition
         <select value={condition} onChange={handleConditionChange}>
           <option value="Greater Than">Greater Than (&gt;)</option>
           <option value="Less Than">Less Than (&lt;)</option>
@@ -56,10 +55,10 @@ export const IFConditionNode = ({ id, data, selected }) => {
         </select>
       </label>
       <label>
-        Compare Value:
+        Value
         <input
           type="text"
-          placeholder="Value to compare..."
+          placeholder="Compare value..."
           value={value}
           onChange={handleValueChange}
         />
@@ -68,17 +67,16 @@ export const IFConditionNode = ({ id, data, selected }) => {
         style={{
           display: 'flex',
           justifyContent: 'flex-end',
-          gap: '10px',
+          gap: '8px',
           fontSize: '10px',
           fontWeight: 600,
+          color: '#85847F',
           marginTop: '2px',
-          paddingRight: '2px',
         }}
       >
-        <span style={{ color: '#10b981' }}>True ➔</span>
-        <span style={{ color: '#ef4444' }}>False ➔</span>
+        <span>True ➔</span>
+        <span>False ➔</span>
       </div>
     </BaseNode>
   );
 };
-

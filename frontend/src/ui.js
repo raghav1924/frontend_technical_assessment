@@ -1,8 +1,8 @@
 // ui.js
-// Displays the drag-and-drop UI with VectorShift design
+// VectorShift Canvas & ReactFlow Setup
 
 import { useState, useRef, useCallback } from 'react';
-import ReactFlow, { Controls, Background, MiniMap } from 'reactflow';
+import ReactFlow, { Controls, Background, MiniMap, MarkerType } from 'reactflow';
 import { useStore } from './store';
 import { shallow } from 'zustand/shallow';
 import { InputNode } from './nodes/inputNode';
@@ -19,10 +19,17 @@ import 'reactflow/dist/style.css';
 
 const gridSize = 20;
 const proOptions = { hideAttribution: true };
+
 const defaultEdgeOptions = {
   type: 'smoothstep',
-  animated: true,
-  style: { stroke: '#111827', strokeWidth: 1.8 },
+  animated: false,
+  style: { stroke: '#7C7B76', strokeWidth: 1.5 },
+  markerEnd: {
+    type: MarkerType.ArrowClosed,
+    width: 14,
+    height: 14,
+    color: '#7C7B76',
+  },
 };
 
 const nodeTypes = {
@@ -74,7 +81,6 @@ export const PipelineUI = () => {
         const appData = JSON.parse(event.dataTransfer.getData('application/reactflow'));
         const type = appData?.nodeType;
 
-        // check if the dropped element is valid
         if (typeof type === 'undefined' || !type) {
           return;
         }
@@ -106,13 +112,7 @@ export const PipelineUI = () => {
   return (
     <div
       ref={reactFlowWrapper}
-      style={{
-        width: '100%',
-        height: '100%',
-        flex: 1,
-        position: 'relative',
-        backgroundColor: 'var(--vs-bg-canvas, #FAF8F5)',
-      }}
+      className="vs-canvas-container"
     >
       <ReactFlow
         nodes={nodes}
@@ -129,17 +129,25 @@ export const PipelineUI = () => {
         connectionLineType="smoothstep"
         defaultEdgeOptions={defaultEdgeOptions}
       >
-        <Background color="#DCD7CC" gap={gridSize} size={1.2} />
-        <Controls position="bottom-left" showInteractive={false} />
+        <Background
+          color="#DDD9D0"
+          gap={gridSize}
+          size={1.5}
+          style={{ opacity: 0.55 }}
+        />
+        <Controls
+          position="bottom-left"
+          showInteractive={false}
+        />
         <MiniMap
           position="bottom-right"
           nodeStrokeWidth={2}
-          nodeColor={() => '#E2DDD3'}
-          maskColor="rgba(250, 248, 245, 0.75)"
+          nodeColor={() => '#D8D5CC'}
+          maskColor="rgba(247, 244, 236, 0.75)"
           style={{
-            background: '#FAF8F5',
-            border: '1px solid #E2DDD3',
-            borderRadius: '8px',
+            background: '#FBFAF5',
+            border: '1px solid #D8D5CC',
+            borderRadius: '4px',
           }}
         />
       </ReactFlow>

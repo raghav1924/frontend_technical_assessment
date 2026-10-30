@@ -19,25 +19,26 @@ export const HTTPRequestNode = ({ id, data, selected }) => {
   return (
     <BaseNode
       id={id}
-      title="🌐 HTTP Request"
+      title="HTTP Request"
+      accent="#60A5FA"
       selected={selected}
       handles={[
         {
           type: 'target',
           position: Position.Left,
           id: `${id}-input`,
-          title: 'Input Data',
+          title: 'Request Input',
         },
         {
           type: 'source',
           position: Position.Right,
           id: `${id}-output`,
-          title: 'Output Response',
+          title: 'Response Output',
         },
       ]}
     >
       <label>
-        Method:
+        Method
         <select value={method} onChange={handleMethodChange}>
           <option value="GET">GET</option>
           <option value="POST">POST</option>
@@ -47,7 +48,7 @@ export const HTTPRequestNode = ({ id, data, selected }) => {
         </select>
       </label>
       <label>
-        URL:
+        URL
         <input
           type="text"
           placeholder="https://api.example.com"
@@ -58,4 +59,3 @@ export const HTTPRequestNode = ({ id, data, selected }) => {
     </BaseNode>
   );
 };
-

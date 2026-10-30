@@ -1,65 +1,71 @@
 // App.js
+// VectorShift Pipeline Builder Main Application
 
-import React from 'react';
+import React, { useState } from 'react';
 import { PipelineToolbar } from './toolbar';
 import { PipelineUI } from './ui';
 import { SubmitButton } from './submit';
 
 function App() {
+  const [activeTab, setActiveTab] = useState('Build');
+
   return (
-    <div className="vs-app">
-      {/* Top Header / Navigation Bar matching VectorShift Brand */}
-      <header className="vs-navbar">
-        <div className="vs-nav-left">
-          <div className="vs-logo">
-            <span>VectorShift</span>
-            <span className="vs-logo-dot" />
-          </div>
-
-          <div className="vs-divider-vertical" />
-
-          <div className="vs-nav-title">
-            <span className="vs-nav-title-main">Workflow Orchestration</span>
-            <span className="vs-nav-title-sub">financial pipelines</span>
-          </div>
+    <div className="vs-app-container">
+      {/* Header (64px) */}
+      <header className="vs-header">
+        <div className="vs-header-left">
+          <a
+            href="/"
+            className="vs-logo"
+            onClick={(e) => e.preventDefault()}
+          >
+            VectorShift
+          </a>
         </div>
 
-        <div className="vs-nav-links">
-          <span className="vs-nav-badge">
-            <span style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: '#059669' }} />
-            SOC 2 Type II
-          </span>
+        {/* Center Navigation */}
+        <nav className="vs-header-nav">
+          {['Build', 'Templates', 'Nodes'].map((tab) => (
+            <span
+              key={tab}
+              className={`vs-header-nav-item ${activeTab === tab ? 'active' : ''}`}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab}
+            </span>
+          ))}
+        </nav>
+
+        {/* Right Actions */}
+        <div className="vs-header-right">
           <a
-            href="#docs"
+            href="#help"
+            className="vs-header-action-link"
             onClick={(e) => e.preventDefault()}
-            className="vs-nav-link"
           >
-            Documentation
+            Help
           </a>
-          <button
-            type="button"
-            className="vs-btn-primary"
-            style={{
-              padding: '6px 14px',
-              fontSize: '12px',
-              backgroundColor: '#FFFFFF',
-              color: '#111827',
-              border: '1px solid #E2DDD3',
-            }}
+          <a
+            href="#settings"
+            className="vs-header-action-link"
+            onClick={(e) => e.preventDefault()}
           >
-            Request Demo
-          </button>
+            Settings
+          </a>
         </div>
       </header>
 
-      {/* Main Workspace */}
-      <main className="vs-workspace">
+      {/* Main Layout (260px sidebar + 1fr canvas) */}
+      <div className="vs-main-layout">
+        {/* Left Sidebar (260px) */}
         <PipelineToolbar />
-        <PipelineUI />
-      </main>
 
-      {/* Bottom Status & Execution Bar */}
-      <SubmitButton />
+        {/* Canvas Area */}
+        <main style={{ position: 'relative', height: '100%', width: '100%', overflow: 'hidden' }}>
+          <PipelineUI />
+          <SubmitButton />
+        </main>
+      </div>
     </div>
   );
 }

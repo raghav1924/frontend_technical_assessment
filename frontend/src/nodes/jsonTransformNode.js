@@ -19,7 +19,8 @@ export const JSONTransformNode = ({ id, data, selected }) => {
   return (
     <BaseNode
       id={id}
-      title="🧩 JSON Transform"
+      title="JSON Transform"
+      accent="#14B8A6"
       selected={selected}
       handles={[
         {
@@ -37,7 +38,7 @@ export const JSONTransformNode = ({ id, data, selected }) => {
       ]}
     >
       <label>
-        Operation:
+        Operation
         <select value={operation} onChange={handleOperationChange}>
           <option value="Map">Map</option>
           <option value="Filter">Filter</option>
@@ -47,7 +48,7 @@ export const JSONTransformNode = ({ id, data, selected }) => {
         </select>
       </label>
       <label>
-        Field:
+        Field
         <input
           type="text"
           placeholder="e.g. data.items"
@@ -58,4 +59,3 @@ export const JSONTransformNode = ({ id, data, selected }) => {
     </BaseNode>
   );
 };
-

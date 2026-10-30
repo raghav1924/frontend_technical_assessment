@@ -7,30 +7,32 @@ export const LLMNode = ({ id, data, selected }) => {
   return (
     <BaseNode
       id={id}
-      title="🤖 LLM"
+      title="LLM"
+      accent="#A78BFA"
       selected={selected}
       handles={[
         {
           type: 'target',
           position: Position.Left,
           id: `${id}-system`,
-          style: { top: `${100 / 3}%` },
+          title: 'System Prompt',
         },
         {
           type: 'target',
           position: Position.Left,
           id: `${id}-prompt`,
-          style: { top: `${200 / 3}%` },
+          title: 'User Prompt',
         },
         {
           type: 'source',
           position: Position.Right,
           id: `${id}-response`,
+          title: 'LLM Response',
         },
       ]}
     >
-      <div style={{ fontSize: '12px', color: '#475569', padding: '4px 0' }}>
-        <span>This is a LLM.</span>
+      <div style={{ fontSize: '12px', color: '#5F6064', padding: '2px 0' }}>
+        <span>Generates text via foundation model.</span>
       </div>
     </BaseNode>
   );

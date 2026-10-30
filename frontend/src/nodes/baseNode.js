@@ -1,5 +1,5 @@
 // baseNode.js
-// Reusable Base Node Wrapper for ReactFlow custom nodes
+// Reusable Base Node Wrapper conforming to VectorShift Design Specification
 
 import React from 'react';
 import { Handle, Position } from 'reactflow';
@@ -15,6 +15,7 @@ export const BaseNode = ({
   title,
   subtitle,
   icon,
+  accent,
   handles = [],
   children,
   fields,
@@ -26,7 +27,7 @@ export const BaseNode = ({
   headerActions,
   footer,
 }) => {
-  // Group handles by position to automatically space them when top/left is not explicitly set
+  // Group handles by position to evenly distribute multiple handles vertically
   const handlesByPosition = {
     [Position.Left]: [],
     [Position.Right]: [],
@@ -51,14 +52,13 @@ export const BaseNode = ({
       const offsetProp = isVertical ? 'top' : 'left';
       const defaultOffset = {};
 
-      // If style does not specify offset and there are multiple handles on the same side, evenly distribute them
+      // Evenly space multiple handles vertically when not explicitly specified
       if (!handle.style || handle.style[offsetProp] === undefined) {
         if (count > 1) {
           defaultOffset[offsetProp] = `${((idx + 1) * 100) / (count + 1)}%`;
         }
       }
 
-      // Handle ID resolution: ensure handle ID is scoped to node id (or preserved if already scoped)
       const handleId = handle.id
         ? handle.id.startsWith(`${id}-`)
           ? handle.id
@@ -95,23 +95,29 @@ export const BaseNode = ({
         />
       ))}
 
-      {/* Header */}
-      {(title || icon || subtitle || headerActions) && (
+      {/* Header (42px) */}
+      {(title || icon || accent || subtitle || headerActions) && (
         <div className="base-node-header" style={headerStyle}>
           <div className="base-node-title-group">
-            {icon && <span className="base-node-icon">{icon}</span>}
+            {accent && (
+              <span
+                className="base-node-accent-dot"
+                style={{ backgroundColor: accent }}
+              />
+            )}
+            {icon && <span style={{ fontSize: '14px', lineHeight: 1 }}>{icon}</span>}
             <div>
               {title && <div className="base-node-title">{title}</div>}
               {subtitle && <div className="base-node-subtitle">{subtitle}</div>}
             </div>
           </div>
-          <div className="base-node-header-actions">
-            {headerActions || <span className="base-node-status-dot" />}
-          </div>
+          {headerActions && (
+            <div className="base-node-header-actions">{headerActions}</div>
+          )}
         </div>
       )}
 
-      {/* Body: renders declarative fields and/or custom inputs/selects passed as children */}
+      {/* Body */}
       <div className="base-node-body" style={bodyStyle}>
         {Array.isArray(fields) &&
           fields.map((field, idx) => {
@@ -152,7 +158,6 @@ export const BaseNode = ({
   );
 };
 
-// Reusable helper components for node form fields
 export const NodeField = ({ label, children, style = {}, className = '' }) => (
   <label className={`base-node-field ${className}`} style={style}>
     {label && <span className="base-node-field-label">{label}</span>}
@@ -211,4 +216,3 @@ export const NodeSelect = ({
 );
 
 export default BaseNode;
-

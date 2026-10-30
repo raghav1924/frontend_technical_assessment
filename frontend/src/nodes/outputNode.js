@@ -19,18 +19,20 @@ export const OutputNode = ({ id, data, selected }) => {
   return (
     <BaseNode
       id={id}
-      title="📤 Output"
+      title="Output"
+      accent="#34D399"
       selected={selected}
       handles={[
         {
           type: 'target',
           position: Position.Left,
           id: `${id}-value`,
+          title: 'Output Target',
         },
       ]}
     >
       <label>
-        Name:
+        Name
         <input 
           type="text" 
           value={currName} 
@@ -38,7 +40,7 @@ export const OutputNode = ({ id, data, selected }) => {
         />
       </label>
       <label>
-        Type:
+        Type
         <select value={outputType} onChange={handleTypeChange}>
           <option value="Text">Text</option>
           <option value="File">Image</option>

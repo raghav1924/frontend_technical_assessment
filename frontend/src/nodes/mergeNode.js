@@ -14,21 +14,20 @@ export const MergeNode = ({ id, data, selected }) => {
   return (
     <BaseNode
       id={id}
-      title="🔗 Merge"
+      title="Merge"
+      accent="#EC4899"
       selected={selected}
       handles={[
         {
           type: 'target',
           position: Position.Left,
           id: `${id}-inputA`,
-          style: { top: '35%' },
           title: 'Input A',
         },
         {
           type: 'target',
           position: Position.Left,
           id: `${id}-inputB`,
-          style: { top: '70%' },
           title: 'Input B',
         },
         {
@@ -44,7 +43,7 @@ export const MergeNode = ({ id, data, selected }) => {
           display: 'flex',
           justifyContent: 'space-between',
           fontSize: '11px',
-          color: '#64748b',
+          color: '#85847F',
           marginBottom: '2px',
         }}
       >
@@ -54,14 +53,14 @@ export const MergeNode = ({ id, data, selected }) => {
       <div
         style={{
           fontSize: '11px',
-          color: '#64748b',
+          color: '#85847F',
           marginBottom: '6px',
         }}
       >
         <span>● Input B</span>
       </div>
       <label>
-        Merge Mode:
+        Merge Mode
         <select value={mode} onChange={handleModeChange}>
           <option value="Combine">Combine Objects</option>
           <option value="Append">Append Arrays</option>
@@ -72,4 +71,3 @@ export const MergeNode = ({ id, data, selected }) => {
     </BaseNode>
   );
 };
-
