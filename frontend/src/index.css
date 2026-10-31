@@ -13,17 +13,7 @@
   --vs-dark-section: #0D1218;
   --vs-dark-text: #F5F3EC;
   --vs-accent: #D7FF00;
-
-  /* Node Accents */
-  --vs-node-trigger: #7C83FD;
-  --vs-node-ai: #A78BFA;
-  --vs-node-text: #C084FC;
-  --vs-node-output: #34D399;
-  --vs-node-data: #60A5FA;
-  --vs-node-logic: #F59E0B;
-  --vs-node-transform: #14B8A6;
-  --vs-node-merge: #EC4899;
-  --vs-node-webhook: #84CC16;
+  --vs-accent-purple: #5046E5;
 
   /* Typography */
   --vs-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -162,88 +152,211 @@ body {
   color: var(--vs-text-primary);
 }
 
-/* Main Two-Column Layout (260px sidebar + canvas) */
+/* Main Two-Column Layout (270px sidebar + canvas) */
 .vs-main-layout {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 270px 1fr;
   height: calc(100vh - 64px);
   width: 100vw;
   overflow: hidden;
   position: relative;
 }
 
-/* Sidebar (260px) */
+/* Left Sidebar (270px) */
 .vs-sidebar {
-  width: 260px;
+  width: 270px;
   background-color: var(--vs-bg-primary);
   border-right: 1px solid var(--vs-border);
-  padding: 20px 16px 32px 20px;
+  padding: 16px 14px 24px 14px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 12px;
   flex-shrink: 0;
   z-index: 20;
 }
 
-.vs-sidebar-section {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.vs-sidebar-section-title {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--vs-text-muted);
-  padding-left: 2px;
-  margin-bottom: 2px;
-}
-
-.vs-sidebar-node-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-/* Node Picker Tile */
-.vs-node-tile {
-  height: 42px;
-  background-color: var(--vs-bg-surface);
-  border: 1px solid var(--vs-border);
-  border-radius: 4px;
+/* 1. Outlined Search Bar matching VectorShift Product UI */
+.vs-search-box {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 0 12px;
-  cursor: grab;
-  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-  user-select: none;
-}
-
-.vs-node-tile:hover {
-  background-color: #F0EEE7;
-  border-color: #A8A49B;
-}
-
-.vs-node-tile:active {
-  cursor: grabbing;
-}
-
-.vs-node-tile-accent {
-  width: 7px;
-  height: 7px;
-  border-radius: 2px;
+  background-color: var(--vs-bg-surface, #FBFAF5);
+  border: 1px solid var(--vs-border, #D8D5CC);
+  border-radius: 6px;
+  padding: 0 10px;
+  height: 38px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
   flex-shrink: 0;
 }
 
-.vs-node-tile-label {
+.vs-search-box:hover {
+  border-color: #BDB9AF;
+}
+
+.vs-search-box:focus-within {
+  border-color: var(--vs-accent-purple, #5046E5);
+  box-shadow: 0 0 0 2px rgba(80, 70, 229, 0.12);
+  background-color: #FFFFFF;
+}
+
+.vs-search-icon {
+  color: #85847F;
+  flex-shrink: 0;
+}
+
+.vs-search-input {
+  border: none;
+  outline: none;
+  background: transparent;
   font-size: 13px;
+  color: var(--vs-text-primary, #111318);
+  width: 100%;
+  font-family: inherit;
+  margin-left: 8px;
+}
+
+.vs-search-input::placeholder {
+  color: #85847F;
+}
+
+.vs-search-clear {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #85847F;
+  cursor: pointer;
+  padding: 2px 4px;
+  line-height: 1;
+  transition: color 0.15s ease;
+}
+
+.vs-search-clear:hover {
+  color: var(--vs-text-primary, #111318);
+}
+
+/* 2. Category Tabs Bar matching VectorShift */
+.vs-tabs-bar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--vs-border, #D8D5CC);
+  scrollbar-width: none;
+  flex-shrink: 0;
+}
+
+.vs-tabs-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.vs-tab-item {
+  background: transparent;
+  border: none;
+  font-size: 12px;
   font-weight: 500;
-  color: var(--vs-text-primary);
+  color: #5F6064;
+  padding: 6px 9px;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  transition: color 0.15s ease, background-color 0.15s ease;
+  font-family: inherit;
+}
+
+.vs-tab-item:hover {
+  color: #111318;
+  background-color: #F0EEE7;
+}
+
+.vs-tab-item.active {
+  color: #111318;
+  font-weight: 600;
+}
+
+.vs-tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 6px;
+  right: 6px;
+  height: 2px;
+  background-color: var(--vs-accent-purple, #5046E5);
+  border-radius: 1px;
+}
+
+/* 3. Node Content & 2-Column Square Card Grid */
+.vs-sidebar-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.vs-nodes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+/* Square Node Card Tile matching screenshot */
+.vs-node-tile-card {
+  height: 76px;
+  background-color: var(--vs-bg-surface, #FBFAF5);
+  border: 1px solid var(--vs-border, #D8D5CC);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 8px 6px;
+  cursor: grab;
+  user-select: none;
+  transition: all 0.15s ease-out;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  text-decoration: none;
+}
+
+.vs-node-tile-card:hover {
+  background-color: #F0EEE7;
+  border-color: #111318;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+.vs-node-tile-card:active {
+  cursor: grabbing;
+  transform: scale(0.97);
+}
+
+.vs-node-tile-icon {
+  color: #111318;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.vs-node-tile-label {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #111318;
+  text-align: center;
+  line-height: 1.2;
   letter-spacing: -0.01em;
+}
+
+.vs-no-results {
+  padding: 32px 16px;
+  text-align: center;
+  font-size: 12px;
+  color: #85847F;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 /* Canvas Area */
