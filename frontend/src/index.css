@@ -67,125 +67,365 @@ body {
   overflow: hidden;
 }
 
-/* Top Navigation Header (64px) */
+/* Compact Top Navigation Header (46px) */
 .vs-header {
-  height: 64px;
+  height: 46px;
   background-color: var(--vs-bg-primary);
   border-bottom: 1px solid var(--vs-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 28px;
+  padding: 0 14px;
   z-index: 30;
   flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 .vs-header-left {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 10px;
+}
+
+/* Sidebar Toggle Button (Matching VectorShift Design) */
+.vs-sidebar-toggle-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: var(--vs-text-secondary);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.15s ease;
+}
+
+.vs-sidebar-toggle-btn:hover {
+  background-color: #EDE8DE;
+  border-color: var(--vs-border);
+  color: var(--vs-text-primary);
+}
+
+.vs-sidebar-toggle-btn:active {
+  transform: scale(0.96);
+}
+
+.vs-sidebar-toggle-btn.is-collapsed {
+  color: var(--vs-text-primary);
+  background-color: #EDE8DE;
+  border-color: var(--vs-border);
 }
 
 .vs-logo {
-  font-size: 22px;
-  font-weight: 500;
-  letter-spacing: -0.03em;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   color: var(--vs-text-primary);
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
+.vs-header-divider {
+  color: var(--vs-border-strong, #BDB9AF);
+  font-size: 12px;
+  user-select: none;
+}
+
+.vs-header-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.vs-breadcrumb-parent {
+  color: var(--vs-text-muted);
+}
+
+.vs-breadcrumb-chevron {
+  color: var(--vs-text-muted);
+  font-size: 11px;
+}
+
+.vs-breadcrumb-current {
+  color: var(--vs-text-primary);
+  font-weight: 500;
+}
+
+.vs-breadcrumb-badge {
+  font-size: 10px;
+  font-weight: 500;
+  background-color: #EDE8DE;
+  color: #5F6064;
+  padding: 1px 6px;
+  border-radius: 3px;
+  line-height: 1.3;
+}
+
+/* Center Compact Navigation Segmented Control */
 .vs-header-nav {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 2px;
+  background-color: var(--vs-bg-surface, #FBFAF5);
+  border: 1px solid var(--vs-border, #D8D5CC);
+  padding: 2px;
+  border-radius: 6px;
 }
 
 .vs-header-nav-item {
-  font-size: 14px;
-  font-weight: 400;
+  height: 26px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 500;
   color: var(--vs-text-secondary);
-  text-decoration: none;
-  padding: 20px 0;
-  position: relative;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   cursor: pointer;
-  transition: color 0.15s ease;
+  transition: all 0.15s ease;
+  font-family: inherit;
+  line-height: 1;
 }
 
 .vs-header-nav-item:hover {
   color: var(--vs-text-primary);
+  background-color: rgba(0, 0, 0, 0.04);
 }
 
 .vs-header-nav-item.active {
   color: var(--vs-text-primary);
-  font-weight: 500;
+  font-weight: 600;
+  background-color: var(--vs-bg-primary, #F7F4EC);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-.vs-header-nav-item.active::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  right: 0;
-  height: 1.5px;
-  background-color: var(--vs-text-primary);
-}
-
+/* Right Header Toolset with Icons */
 .vs-header-right {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 6px;
 }
 
-.vs-header-action-link {
-  font-size: 14px;
-  font-weight: 400;
+.vs-header-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--vs-text-muted);
+  padding: 0 6px;
+  font-weight: 450;
+  user-select: none;
+}
+
+.vs-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #10B981;
+}
+
+/* Header Icon Action Button */
+.vs-header-icon-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  background: transparent;
   color: var(--vs-text-secondary);
-  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: color 0.15s ease;
+  padding: 0;
+  transition: all 0.15s ease;
 }
 
-.vs-header-action-link:hover {
+.vs-header-icon-btn:hover {
+  background-color: #EDE8DE;
+  border-color: var(--vs-border);
   color: var(--vs-text-primary);
 }
 
-/* Main Two-Column Layout (270px sidebar + canvas) */
+.vs-header-icon-btn:active {
+  transform: scale(0.96);
+}
+
+/* Header Deploy Action Button */
+.vs-header-deploy-btn {
+  height: 28px;
+  padding: 0 11px;
+  border-radius: 5px;
+  background-color: #111318;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 500;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+  margin-left: 2px;
+}
+
+.vs-header-deploy-btn:hover {
+  background-color: #292B30;
+}
+
+.vs-header-deploy-btn:active {
+  transform: scale(0.98);
+}
+
+/* Main Layout (Collapsible Sidebar + Canvas) */
 .vs-main-layout {
-  display: grid;
-  grid-template-columns: 270px 1fr;
-  height: calc(100vh - 64px);
+  display: flex;
+  height: calc(100vh - 46px);
   width: 100vw;
   overflow: hidden;
   position: relative;
 }
 
-/* Left Sidebar (270px) */
+/* Left Sidebar (270px or Collapsible) */
 .vs-sidebar {
   width: 270px;
+  min-width: 270px;
+  max-width: 270px;
   background-color: var(--vs-bg-primary);
   border-right: 1px solid var(--vs-border);
-  padding: 16px 14px 24px 14px;
+  padding: 14px 14px 24px 14px;
   overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   gap: 12px;
   flex-shrink: 0;
   z-index: 20;
+  box-sizing: border-box;
+  transition: width 0.22s cubic-bezier(0.2, 0, 0, 1),
+              min-width 0.22s cubic-bezier(0.2, 0, 0, 1),
+              max-width 0.22s cubic-bezier(0.2, 0, 0, 1),
+              padding 0.22s cubic-bezier(0.2, 0, 0, 1),
+              opacity 0.15s ease,
+              border-color 0.2s ease;
 }
 
-/* 1. Outlined Search Bar matching VectorShift Product UI */
+.vs-sidebar.collapsed {
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  padding: 14px 0 24px 0 !important;
+  border-right-color: transparent !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden;
+}
+
+/* Sidebar Top Bar with Title and Close Button */
+.vs-sidebar-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 2px;
+  flex-shrink: 0;
+}
+
+.vs-sidebar-top-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vs-text-secondary);
+}
+
+.vs-sidebar-close-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--vs-text-muted);
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.15s ease;
+}
+
+.vs-sidebar-close-btn:hover {
+  background-color: #EDE8DE;
+  color: var(--vs-text-primary);
+}
+
+/* Canvas Area Wrapper */
+.vs-main-canvas-wrapper {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Floating Expand Tab on Canvas Left Edge when Sidebar is Collapsed */
+.vs-canvas-expand-tab {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 15;
+  background-color: var(--vs-bg-surface, #FBFAF5);
+  border: 1px solid var(--vs-border, #D8D5CC);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  height: 32px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  color: var(--vs-text-primary);
+  font-family: inherit;
+  transition: all 0.15s ease;
+  animation: vsFadeIn 0.2s ease-out;
+}
+
+.vs-canvas-expand-tab:hover {
+  background-color: #F0EEE7;
+  border-color: #BDB9AF;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  transform: translateX(1px);
+}
+
+.vs-canvas-expand-tab:active {
+  transform: scale(0.97);
+}
+
+.vs-expand-tab-text {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--vs-text-primary);
+}
+
+/* 1. Compact Outlined Search Bar */
 .vs-search-box {
   position: relative;
   display: flex;
   align-items: center;
   background-color: var(--vs-bg-surface, #FBFAF5);
   border: 1px solid var(--vs-border, #D8D5CC);
-  border-radius: 6px;
-  padding: 0 10px;
-  height: 38px;
+  border-radius: 5px;
+  padding: 0 8px;
+  height: 32px;
   transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
   flex-shrink: 0;
 }
@@ -209,11 +449,11 @@ body {
   border: none;
   outline: none;
   background: transparent;
-  font-size: 13px;
+  font-size: 12px;
   color: var(--vs-text-primary, #111318);
   width: 100%;
   font-family: inherit;
-  margin-left: 8px;
+  margin-left: 6px;
 }
 
 .vs-search-input::placeholder {
@@ -223,10 +463,10 @@ body {
 .vs-search-clear {
   background: none;
   border: none;
-  font-size: 16px;
+  font-size: 14px;
   color: #85847F;
   cursor: pointer;
-  padding: 2px 4px;
+  padding: 1px 3px;
   line-height: 1;
   transition: color 0.15s ease;
 }
@@ -235,13 +475,13 @@ body {
   color: var(--vs-text-primary, #111318);
 }
 
-/* 2. Category Tabs Bar matching VectorShift */
+/* 2. Small Category Bar with Icons */
 .vs-tabs-bar {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 3px;
   overflow-x: auto;
-  padding-bottom: 4px;
+  padding: 2px 0 6px 0;
   border-bottom: 1px solid var(--vs-border, #D8D5CC);
   scrollbar-width: none;
   flex-shrink: 0;
@@ -254,32 +494,48 @@ body {
 .vs-tab-item {
   background: transparent;
   border: none;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: #5F6064;
-  padding: 6px 9px;
+  padding: 4px 7px;
   border-radius: 4px;
   cursor: pointer;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   position: relative;
   transition: color 0.15s ease, background-color 0.15s ease;
   font-family: inherit;
 }
 
+.vs-tab-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  opacity: 0.85;
+}
+
+.vs-tab-label {
+  line-height: 1;
+}
+
 .vs-tab-item:hover {
   color: #111318;
-  background-color: #F0EEE7;
+  background-color: #EDE8DE;
 }
 
 .vs-tab-item.active {
   color: #111318;
   font-weight: 600;
+  background-color: #EDE8DE;
 }
 
 .vs-tab-item.active::after {
   content: '';
   position: absolute;
-  bottom: -5px;
+  bottom: -6px;
   left: 6px;
   right: 6px;
   height: 2px;
@@ -297,21 +553,21 @@ body {
 .vs-nodes-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
+  gap: 7px;
 }
 
-/* Square Node Card Tile matching screenshot */
+/* Compact Square Node Card Tile */
 .vs-node-tile-card {
-  height: 76px;
+  height: 68px;
   background-color: var(--vs-bg-surface, #FBFAF5);
   border: 1px solid var(--vs-border, #D8D5CC);
-  border-radius: 8px;
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  padding: 8px 6px;
+  gap: 5px;
+  padding: 6px 4px;
   cursor: grab;
   user-select: none;
   transition: all 0.15s ease-out;
@@ -336,16 +592,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
 }
 
 .vs-node-tile-label {
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 500;
   color: #111318;
   text-align: center;
-  line-height: 1.2;
+  line-height: 1.15;
   letter-spacing: -0.01em;
 }
 
@@ -583,4 +839,437 @@ body {
 @keyframes vsSlideUp {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom Canvas Controls Bar (Bottom Left) */
+.vs-canvas-controls {
+  display: flex !important;
+  flex-direction: column !important;
+  background-color: var(--vs-bg-surface, #FBFAF5) !important;
+  border: 1px solid var(--vs-border, #D8D5CC) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  overflow: hidden !important;
+  user-select: none !important;
+  margin: 16px !important;
+  padding: 0 !important;
+  z-index: 15 !important;
+}
+
+.vs-control-btn {
+  width: 34px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--vs-border, #D8D5CC);
+  color: var(--vs-text-primary, #111318);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.15s ease;
+  font-family: var(--vs-font-sans);
+}
+
+.vs-control-btn:last-child {
+  border-bottom: none;
+}
+
+.vs-control-btn:hover {
+  background-color: #F0EEE7;
+  color: #111318;
+}
+
+.vs-control-btn:active {
+  transform: scale(0.95);
+}
+
+/* Zoom Percentage Button */
+.vs-zoom-pct-btn {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  padding: 0 2px;
+  min-width: 34px;
+  font-family: var(--vs-font-sans);
+}
+
+/* Locked Canvas Active State on Button */
+.vs-control-btn.is-locked {
+  background-color: #FEF3C7;
+  color: #B45309;
+}
+
+.vs-control-btn.is-locked:hover {
+  background-color: #FDE68A;
+  color: #92400E;
+}
+
+/* Locked Canvas Floating Banner Indicator */
+.vs-canvas-lock-pill {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #FEF3C7;
+  border: 1px solid #FCD34D;
+  color: #92400E;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 20;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  pointer-events: none;
+  animation: vsFadeIn 0.2s ease-out;
+}
+
+.is-canvas-locked .react-flow__pane {
+  cursor: not-allowed !important;
+}
+
+/* Dark Mode Theme */
+.vs-app-container.dark {
+  --vs-bg-primary: #0D1218;
+  --vs-bg-surface: #141A22;
+  --vs-text-primary: #F5F3EC;
+  --vs-text-secondary: #9BA3AF;
+  --vs-text-muted: #6B7280;
+  --vs-border: #232B36;
+  --vs-border-strong: #374151;
+  --vs-tag-bg: #1E2734;
+  background-color: #0D1218;
+  color: #F5F3EC;
+}
+
+.vs-app-container.dark .vs-header {
+  background-color: #0D1218;
+  border-bottom-color: #232B36;
+}
+
+.vs-app-container.dark .vs-sidebar-toggle-btn:hover {
+  background-color: #1E2734;
+  border-color: #232B36;
+  color: #F5F3EC;
+}
+
+.vs-app-container.dark .vs-sidebar-toggle-btn.is-collapsed {
+  background-color: #1E2734;
+  border-color: #374151;
+  color: #F5F3EC;
+}
+
+.vs-app-container.dark .vs-sidebar-top-title {
+  color: #9BA3AF;
+}
+
+.vs-app-container.dark .vs-sidebar-close-btn:hover {
+  background-color: #1E2734;
+  color: #F5F3EC;
+}
+
+.vs-app-container.dark .vs-canvas-expand-tab {
+  background-color: #141A22;
+  border-color: #232B36;
+  color: #F5F3EC;
+}
+
+.vs-app-container.dark .vs-canvas-expand-tab:hover {
+  background-color: #1E2734;
+  border-color: #374151;
+}
+
+.vs-app-container.dark .vs-expand-tab-text {
+  color: #F5F3EC;
+}
+
+.vs-app-container.dark .vs-logo {
+  color: #F5F3EC;
+}
+
+.vs-app-container.dark .vs-header-divider {
+  color: #374151;
+}
+
+.vs-app-container.dark .vs-breadcrumb-parent {
+  color: #6B7280;
+}
+
+.vs-app-container.dark .vs-breadcrumb-chevron {
+  color: #6B7280;
+}
+
+.vs-app-container.dark .vs-breadcrumb-current {
+  color: #F5F3EC;
+}
+
+.vs-app-container.dark .vs-breadcrumb-badge {
+  background-color: #1E2734;
+  color: #9BA3AF;
+}
+
+.vs-app-container.dark .vs-header-nav {
+  background-color: #141A22;
+  border-color: #232B36;
+}
+
+.vs-app-container.dark .vs-header-nav-item {
+  color: #9BA3AF;
+}
+
+.vs-app-container.dark .vs-header-nav-item:hover {
+  color: #F5F3EC;
+  background-color: #1E2734;
+}
+
+.vs-app-container.dark .vs-header-nav-item.active {
+  color: #F5F3EC;
+  background-color: #0D1218;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.vs-app-container.dark .vs-header-icon-btn {
+  color: #9BA3AF;
+}
+
+.vs-app-container.dark .vs-header-icon-btn:hover {
+  background-color: #1E2734;
+  border-color: #232B36;
+  color: #F5F3EC;
+}
+
+.vs-app-container.dark .vs-header-deploy-btn {
+  background-color: #5046E5;
+  color: #FFFFFF;
+}
+
+.vs-app-container.dark .vs-header-deploy-btn:hover {
+  background-color: #4338CA;
+}
+
+.vs-app-container.dark .vs-sidebar {
+  background-color: #0D1218;
+  border-right-color: #232B36;
+}
+
+.vs-app-container.dark .vs-search-box {
+  background-color: #141A22;
+  border-color: #232B36;
+}
+
+.vs-app-container.dark .vs-search-box:hover {
+  border-color: #374151;
+}
+
+.vs-app-container.dark .vs-search-box:focus-within {
+  background-color: #1A222D;
+  border-color: #6366F1;
+}
+
+.vs-app-container.dark .vs-search-input {
+  color: #F5F3EC;
+}
+
+.vs-app-container.dark .vs-search-input::placeholder {
+  color: #6B7280;
+}
+
+.vs-app-container.dark .vs-search-icon,
+.vs-app-container.dark .vs-search-clear {
+  color: #6B7280;
+}
+
+.vs-app-container.dark .vs-tabs-bar {
+  border-bottom-color: #232B36;
+}
+
+.vs-app-container.dark .vs-tab-item {
+  color: #9BA3AF;
+}
+
+.vs-app-container.dark .vs-tab-item:hover {
+  color: #F5F3EC;
+  background-color: #1E2734;
+}
+
+.vs-app-container.dark .vs-tab-item.active {
+  color: #F5F3EC;
+  background-color: #1E2734;
+}
+
+.vs-app-container.dark .vs-node-tile-card {
+  background-color: #141A22;
+  border-color: #232B36;
+}
+
+.vs-app-container.dark .vs-node-tile-card:hover {
+  background-color: #1E2734;
+  border-color: #4B5563;
+}
+
+.vs-app-container.dark .vs-node-tile-icon,
+.vs-app-container.dark .vs-node-tile-label {
+  color: #F5F3EC;
+}
+
+.vs-app-container.dark .vs-canvas-container {
+  background-color: #0D1218;
+}
+
+.vs-app-container.dark .react-flow__background {
+  background-color: #0D1218 !important;
+}
+
+.vs-app-container.dark .react-flow__edge-path {
+  stroke: #8B949E !important;
+}
+
+.vs-app-container.dark .react-flow__edge.selected .react-flow__edge-path {
+  stroke: #F5F3EC !important;
+}
+
+.vs-app-container.dark .vs-canvas-controls {
+  background-color: #141A22 !important;
+  border-color: #232B36 !important;
+}
+
+.vs-app-container.dark .vs-control-btn {
+  border-bottom-color: #232B36;
+  color: #F5F3EC;
+}
+
+.vs-app-container.dark .vs-control-btn:hover {
+  background-color: #1E2734;
+  color: #FFFFFF;
+}
+
+.vs-app-container.dark .vs-control-btn.is-locked {
+  background-color: #78350F;
+  color: #FDE68A;
+}
+
+.vs-app-container.dark .vs-control-btn.is-locked:hover {
+  background-color: #92400E;
+  color: #FEF3C7;
+}
+
+.vs-app-container.dark .vs-canvas-lock-pill {
+  background-color: #78350F;
+  border-color: #B45309;
+  color: #FDE68A;
+}
+
+.vs-app-container.dark .base-node {
+  background-color: #141A22;
+  border-color: #2E3846;
+  color: #F5F3EC;
+}
+
+.vs-app-container.dark .base-node:hover {
+  border-color: #4B5563;
+}
+
+.vs-app-container.dark .base-node.selected {
+  border-color: #F5F3EC !important;
+  box-shadow: 0 0 0 2px rgba(245, 243, 236, 0.15) !important;
+}
+
+.vs-app-container.dark .base-node-header {
+  background-color: #18202A;
+  border-bottom-color: #232B36;
+}
+
+.vs-app-container.dark .base-node-title {
+  color: #F5F3EC;
+}
+
+.vs-app-container.dark .base-node-subtitle {
+  color: #9BA3AF;
+}
+
+.vs-app-container.dark .base-node-delete-btn {
+  color: #6B7280;
+}
+
+.vs-app-container.dark .base-node-delete-btn:hover {
+  background-color: #2E1515 !important;
+  color: #F87171 !important;
+}
+
+.vs-app-container.dark .base-node-field-label {
+  color: #9BA3AF;
+}
+
+.vs-app-container.dark .base-node-input,
+.vs-app-container.dark .base-node-select {
+  background-color: #0D1218;
+  border-color: #2E3846;
+  color: #F5F3EC;
+}
+
+.vs-app-container.dark .base-node-input:focus,
+.vs-app-container.dark .base-node-select:focus {
+  border-color: #6366F1;
+  background-color: #111822;
+}
+
+.vs-app-container.dark .base-node-handle {
+  background-color: #F5F3EC;
+  border-color: #141A22;
+}
+
+.vs-app-container.dark .base-node-footer {
+  background-color: #18202A;
+  border-top-color: #232B36;
+}
+
+.vs-app-container.dark .vs-btn-analyze {
+  background-color: #F5F3EC;
+  color: #0D1218;
+  border-color: #F5F3EC;
+}
+
+.vs-app-container.dark .vs-btn-analyze:hover {
+  background-color: #FFFFFF;
+}
+
+.vs-app-container.dark .vs-modal {
+  background-color: #141A22;
+  border-color: #374151;
+  color: #F5F3EC;
+}
+
+.vs-app-container.dark .vs-modal-title {
+  color: #F5F3EC;
+}
+
+.vs-app-container.dark .vs-modal-header {
+  border-bottom-color: #232B36;
+}
+
+.vs-app-container.dark .vs-metric-card {
+  background-color: #0D1218;
+  border-color: #232B36;
+}
+
+.vs-app-container.dark .vs-metric-value {
+  color: #F5F3EC;
+}
+
+.vs-app-container.dark .vs-metric-label {
+  color: #9BA3AF;
+}
+
+.vs-app-container.dark .vs-modal-btn {
+  background-color: #F5F3EC;
+  color: #0D1218;
+  border-color: #F5F3EC;
+}
+
+.vs-app-container.dark .vs-modal-btn:hover {
+  background-color: #FFFFFF;
 }

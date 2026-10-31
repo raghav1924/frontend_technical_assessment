@@ -30,9 +30,11 @@ export const BaseNode = ({
   footer,
 }) => {
   const deleteNode = useStore((state) => state.deleteNode);
+  const isLocked = useStore((state) => state.isLocked);
 
   const handleDelete = (e) => {
     e.stopPropagation();
+    if (isLocked) return;
     if (onDelete) {
       onDelete(id);
     } else if (deleteNode) {
@@ -128,10 +130,11 @@ export const BaseNode = ({
             {headerActions}
             <button
               type="button"
-              className="base-node-delete-btn"
+              className={`base-node-delete-btn ${isLocked ? 'disabled' : ''}`}
               onClick={handleDelete}
-              title="Delete node"
+              title={isLocked ? 'Canvas is locked' : 'Delete node'}
               aria-label="Delete node"
+              disabled={isLocked}
             >
               &times;
             </button>

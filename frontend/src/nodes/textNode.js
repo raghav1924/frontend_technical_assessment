@@ -108,7 +108,7 @@ export const TextNode = ({ id, data, selected }) => {
             lineHeight: 1.5,
             width: '100%',
             fontFamily: 'inherit',
-            color: '#111318',
+            color: 'inherit',
             padding: '2px 0',
           }}
           rows={Math.max(currText.split('\n').length, 2)}
@@ -120,7 +120,7 @@ export const TextNode = ({ id, data, selected }) => {
               flexWrap: 'wrap',
               gap: '4px',
               paddingTop: '6px',
-              borderTop: '1px solid #D8D5CC',
+              borderTop: '1px solid var(--vs-border, #D8D5CC)',
             }}
           >
             {variables.map((v) => (
@@ -129,8 +129,8 @@ export const TextNode = ({ id, data, selected }) => {
                 style={{
                   fontSize: '10px',
                   fontWeight: 500,
-                  color: '#5F6064',
-                  backgroundColor: '#F0EEE7',
+                  color: 'var(--vs-text-secondary, #5F6064)',
+                  backgroundColor: 'var(--vs-tag-bg, #F0EEE7)',
                   padding: '1px 6px',
                   borderRadius: '3px',
                 }}
